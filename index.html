@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Neon Dive 3D</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            neon: {
+              green: '#00ff9d',
+              pink: '#ff0055',
+              gold: '#ffea00',
+              blue: '#00eaff',
+              dark: '#050505',
+              void: '#000000',
+            }
+          },
+          fontFamily: {
+            sans: ['Rajdhani', 'sans-serif'],
+            mono: ['monospace'],
+          },
+          animation: {
+            'pulse-fast': 'pulse 0.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'glitch': 'glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite',
+            'blink': 'blink 1s steps(2, start) infinite',
+          },
+          keyframes: {
+            glitch: {
+              '0%': { transform: 'translate(0)' },
+              '20%': { transform: 'translate(-2px, 2px)' },
+              '40%': { transform: 'translate(-2px, -2px)' },
+              '60%': { transform: 'translate(2px, 2px)' },
+              '80%': { transform: 'translate(2px, -2px)' },
+              '100%': { transform: 'translate(0)' }
+            },
+            blink: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- MediaPipe Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+  
+  <style>
+    body { background-color: #050505; overflow: hidden; }
+    /* Hide scrollbars */
+    ::-webkit-scrollbar { display: none; }
+    
+    .text-stroke {
+      -webkit-text-stroke: 1px currentColor;
+      color: transparent;
+    }
+    .text-stroke-2 {
+      -webkit-text-stroke: 2px currentColor;
+      color: transparent;
+    }
+    
+    .scanlines {
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0) 50%,
+        rgba(0,0,0,0.2) 50%,
+        rgba(0,0,0,0.2)
+      );
+      background-size: 100% 3px;
+      pointer-events: none;
+      position: fixed; inset: 0; z-index: 50;
+    }
+    
+    .crt-flicker {
+      animation: flicker 0.15s infinite;
+      pointer-events: none;
+      position: fixed; inset: 0; z-index: 51;
+      background: rgba(255,255,255,0.02);
+      opacity: 0.1;
+    }
+    
+    @keyframes flicker {
+      0% { opacity: 0.05; }
+      50% { opacity: 0.1; }
+      100% { opacity: 0.05; }
+    }
+  </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
+    "three": "https://aistudiocdn.com/three@^0.181.2",
+    "three/addons/": "https://aistudiocdn.com/three@^0.181.2/examples/jsm/",
+    "react-dom/client": "https://aistudiocdn.com/react-dom@^19.2.1/client",
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.1",
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react/jsx-runtime": "https://aistudiocdn.com/react@^19.2.1/jsx-runtime",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "three/": "https://aistudiocdn.com/three@^0.181.2/"
+  }
+}
+</script>
+</head>
+<body>
+  <div id="root"></div>
+  <div class="scanlines"></div>
+  <div class="crt-flicker"></div>
+</body>
+</html>

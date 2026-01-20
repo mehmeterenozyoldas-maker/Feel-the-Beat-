@@ -1,0 +1,7 @@
+{
+  "name": "Neon Dive 3D",
+  "description": "A cyberpunk rhythm campaign game controlled by mouse or webcam hand tracking.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
